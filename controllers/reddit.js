@@ -4,6 +4,7 @@ const snoowrap = require('snoowrap');
 const emailService = require('./../services/email');
 
 const SUBREDDIT = "jobme";
+const keywords = ["Node.js", "Node", "Js", "Online", "Javascript", "Remote", "Ruby", "Crawling"];
 
 let req = new snoowrap({
   userAgent: 'script',
@@ -36,11 +37,7 @@ module.exports.updateNewJobs = () => {
 
     console.log(newPosts.map(post => post.title));
 
-    // if(newPosts) {
-    //   emailService.sendMail("jobs@reddit.com", "nesa993@gmail.com", "jobs", newPosts.toString(), (err) => {
-    //     console.log(err);
-    //   });
-    // }
+    sendEmail(newPosts);
 
     latestPosts = posts;
   })
@@ -68,12 +65,37 @@ function getNewJobs(upcoming) {
   return newPosts;
 }
 
+function titleContains(title, keywords) {
+
+  let contains = false;
+
+  keywords.forEach((word) => {
+    if(title.indexOf(word) !== -1) {
+      contains = true;
+    }
+  });
+
+  return contains;
+}
+
 function filterJobs(jobs) {
   return jobs.filter((job) => {
-    if(job.title.indexOf("[Hiring]") !== -1) {
+    if(job.title.indexOf("[Hiring]") !== -1 && titleContains(job.title, keywords)) {
       return true;
     }
 
     return false;
   });
+}
+
+function sendEmail(newPosts) {
+
+  let formatedPosts = newPosts.map(post => post.url);
+
+  if(newPosts.length > 0) {
+    emailService.sendMail("jobs@reddit.com", "nesa993@gmail.com", "jobs",
+     formatedPosts.toString(), (err) => {
+      console.log(err);
+    });
+  }
 }
