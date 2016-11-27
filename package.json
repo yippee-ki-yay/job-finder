@@ -4,7 +4,7 @@
   "description": "Simple freelance web scraper",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon main.js --exec babel-node --presets es2015,stage-2",
+    "start": "node main.js --exec babel-node --presets es2015,stage-2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
