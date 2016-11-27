@@ -7,7 +7,13 @@ var config = {
 };
 
 var transporter = nodemailer
-    .createTransport("smtps://" + config.email + ":" + config.password + "@smtp.gmail.com");
+    .createTransport({
+      service: "Gmail",
+      auth: {
+        user: config.email,
+        pass: config.password
+      }
+    });
 
 
 var mailOptions = {
