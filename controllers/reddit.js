@@ -3,7 +3,7 @@ const snoowrap = require('snoowrap');
 
 const emailService = require('./../services/email');
 
-const SUBREDDIT = "jobme";
+const SUBREDDIT = "forhire";
 const keywords = ["Node.js", "Node", "Js", "Online", "Javascript", "Remote", "Ruby", "Crawling"];
 
 let req = new snoowrap({
